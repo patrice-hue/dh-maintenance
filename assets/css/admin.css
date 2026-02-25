@@ -1,0 +1,168 @@
+/* -----------------------------------------------------------------------
+   DH Maintenance – Admin styles
+   --------------------------------------------------------------------- */
+
+/* Page wrapper */
+.dh-maintenance-wrap {
+    max-width: 900px;
+}
+
+.dh-maintenance-wrap h1 {
+    margin-bottom: 1rem;
+}
+
+/* ── Status banner ─────────────────────────────────────────────────── */
+.dh-status-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 0.9375rem;
+}
+
+.dh-status-active {
+    background: #fef3cd;
+    border-left: 4px solid #f0ad4e;
+    color: #6d4c00;
+}
+
+.dh-status-inactive {
+    background: #d4edda;
+    border-left: 4px solid #28a745;
+    color: #155724;
+}
+
+.dh-status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dh-status-active .dh-status-dot {
+    background: #f0ad4e;
+    box-shadow: 0 0 0 3px rgba(240,173,78,.3);
+}
+
+.dh-status-inactive .dh-status-dot {
+    background: #28a745;
+    box-shadow: 0 0 0 3px rgba(40,167,69,.3);
+}
+
+/* ── Form table ────────────────────────────────────────────────────── */
+.dh-form-table th {
+    vertical-align: middle;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+}
+
+.dh-form-table td {
+    vertical-align: middle;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+}
+
+/* ── Toggle switch ─────────────────────────────────────────────────── */
+.dh-toggle {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    vertical-align: middle;
+}
+
+.dh-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.dh-toggle-slider {
+    position: absolute;
+    inset: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.25s;
+}
+
+.dh-toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+
+.dh-toggle input:checked + .dh-toggle-slider {
+    background-color: #0073aa;
+}
+
+.dh-toggle input:checked + .dh-toggle-slider::before {
+    transform: translateX(24px);
+}
+
+.dh-toggle input:focus-visible + .dh-toggle-slider {
+    outline: 2px solid #0073aa;
+    outline-offset: 2px;
+}
+
+.dh-toggle-label {
+    margin-left: 0.6rem;
+    vertical-align: middle;
+    font-size: 0.9375rem;
+}
+
+/* ── Logo preview ──────────────────────────────────────────────────── */
+.dh-logo-preview {
+    margin-bottom: 0.75rem;
+    min-height: 60px;
+}
+
+.dh-logo-preview img {
+    max-width: 200px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+    background: #f9f9f9;
+    display: block;
+}
+
+/* ── Preview section ───────────────────────────────────────────────── */
+.dh-preview-section {
+    margin-top: 2.5rem;
+    border-top: 1px solid #ddd;
+    padding-top: 1.5rem;
+}
+
+.dh-preview-section h2 {
+    margin-bottom: 1rem;
+}
+
+.dh-preview-frame-wrap {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f0f0f1;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+#dh-preview-frame {
+    width: 100%;
+    height: 480px;
+    border: none;
+    display: block;
+}
