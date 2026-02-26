@@ -3,7 +3,7 @@
  * Plugin Name: DH Maintenance
  * Plugin URI:  https://github.com/patrice-hue/dh-maintenance
  * Description: A simple maintenance mode plugin with customizable logo, title and content.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      Patrice Hue
  * License:     GPL-2.0-or-later
  * Text Domain: dh-maintenance
@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'DH_MAINTENANCE_VERSION', '1.0.0' );
+define( 'DH_MAINTENANCE_VERSION', '1.1.0' );
 define( 'DH_MAINTENANCE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'DH_MAINTENANCE_URL', plugin_dir_url( __FILE__ ) );
 
