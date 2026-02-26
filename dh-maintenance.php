@@ -28,9 +28,15 @@ function dh_maintenance_intercept() {
         return;
     }
 
-    // Let logged-in admins / editors through.
-    if ( current_user_can( 'manage_options' ) ) {
-        return;
+    // Let users whose role is in the bypass list through.
+    if ( is_user_logged_in() ) {
+        $bypass_roles = isset( $options['bypass_roles'] ) ? (array) $options['bypass_roles'] : array( 'administrator' );
+        $user         = wp_get_current_user();
+        foreach ( $bypass_roles as $role ) {
+            if ( in_array( $role, (array) $user->roles, true ) ) {
+                return;
+            }
+        }
     }
 
     // Allow WP-cron, REST, XML-RPC to function normally.
@@ -104,6 +110,15 @@ function dh_maintenance_sanitize( $input ) {
         ? sanitize_hex_color( $input['text_color'] )
         : '#333333';
 
+    // Roles allowed to bypass maintenance mode. Administrator always bypasses.
+    $raw_roles = isset( $input['bypass_roles'] ) && is_array( $input['bypass_roles'] )
+        ? array_map( 'sanitize_key', $input['bypass_roles'] )
+        : array();
+    if ( ! in_array( 'administrator', $raw_roles, true ) ) {
+        $raw_roles[] = 'administrator';
+    }
+    $clean['bypass_roles'] = $raw_roles;
+
     return $clean;
 }
 
@@ -142,8 +157,9 @@ function dh_maintenance_settings_page() {
     $logo_url   = isset( $options['logo_url'] )  ? $options['logo_url']  : '';
     $title      = isset( $options['title'] )     ? $options['title']     : __( 'We\'ll be back soon!', 'dh-maintenance' );
     $content    = isset( $options['content'] )   ? $options['content']   : __( 'Our website is currently undergoing scheduled maintenance. Thank you for your patience.', 'dh-maintenance' );
-    $bg_color   = isset( $options['bg_color'] )  ? $options['bg_color']  : '#ffffff';
-    $text_color = isset( $options['text_color'] )? $options['text_color']: '#333333';
+    $bg_color     = isset( $options['bg_color'] )     ? $options['bg_color']     : '#ffffff';
+    $text_color   = isset( $options['text_color'] )   ? $options['text_color']   : '#333333';
+    $bypass_roles = isset( $options['bypass_roles'] ) ? (array) $options['bypass_roles'] : array( 'administrator' );
     ?>
     <div class="wrap dh-maintenance-wrap">
         <h1><?php esc_html_e( 'DH Maintenance', 'dh-maintenance' ); ?></h1>
@@ -179,6 +195,30 @@ function dh_maintenance_settings_page() {
                         <span class="dh-toggle-label">
                             <?php esc_html_e( 'Enable maintenance mode', 'dh-maintenance' ); ?>
                         </span>
+                    </td>
+                </tr>
+
+                <!-- Bypass Roles -->
+                <tr>
+                    <th scope="row"><?php esc_html_e( 'Bypass Roles', 'dh-maintenance' ); ?></th>
+                    <td>
+                        <fieldset>
+                            <legend class="screen-reader-text"><?php esc_html_e( 'Bypass Roles', 'dh-maintenance' ); ?></legend>
+                            <?php foreach ( wp_roles()->roles as $role_slug => $role_data ) :
+                                $is_admin = ( 'administrator' === $role_slug );
+                                $checked  = $is_admin || in_array( $role_slug, $bypass_roles, true );
+                            ?>
+                            <label class="dh-role-label">
+                                <input type="checkbox"
+                                       name="dh_maintenance_options[bypass_roles][]"
+                                       value="<?php echo esc_attr( $role_slug ); ?>"
+                                       <?php checked( $checked ); ?>
+                                       <?php disabled( $is_admin ); ?>>
+                                <?php echo esc_html( translate_user_role( $role_data['name'] ) ); ?>
+                            </label>
+                            <?php endforeach; ?>
+                        </fieldset>
+                        <p class="description"><?php esc_html_e( 'Users with a checked role will see the live site instead of the maintenance page. Administrators always bypass.', 'dh-maintenance' ); ?></p>
                     </td>
                 </tr>
 

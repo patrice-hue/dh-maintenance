@@ -47,6 +47,7 @@ All of the following can be set from **Settings → DH Maintenance**:
 
 | Setting | Description |
 |---|---|
+| **Bypass Roles** | Roles that can see the live site while maintenance mode is active. Administrators always bypass and cannot be unchecked. |
 | **Logo** | Upload an image via the media library (PNG or SVG recommended) |
 | **Title** | The main heading shown on the maintenance page |
 | **Message** | Rich-text content shown below the title |
